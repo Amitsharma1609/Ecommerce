@@ -33,7 +33,6 @@ Route::post('/search',[ProductController::class,'search']);
 Route::get('/myorder',[ProductController::class,'myOrder']);
 Route::get('/ordernow',[ProductController::class,'orderNow']);
 Route::post('order-place',[ProductController::class,'orderplace']);
-
 Route::get('manage-item',[ProductController::class,'manageitem']);
 Route::get('/edit/{id}',[ProductController::class,'edit']);
 Route::post('/edit/{id}',[ProductController::class,'update']);
@@ -45,3 +44,10 @@ Route::post('/add',[ProductController::class,'addItems']);
 Route::get('/users',[ProductController::class,'users']);
 Route::get('/deletes/{id}',[ProductController::class,'deletes']);
 Route::get('orders/{id}',[ProductController::class,'orders']);
+Route::get('mange',[ProductController::class,'AdminOrder']);
+Route::post('/update/{id}',[ProductController::class,'adminUpdate']);
+Route::get('/catergory',[ProductController::class,'catergory']);
+Route::post('/cat',[ProductController::class,'allcat']);
+Route::get('/cat',function(){
+    return view('category');
+});

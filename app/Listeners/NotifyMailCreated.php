@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\OrderCreated;
 use App\Mail\UserMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
+
 use Mail;
 
 class NotifyMailCreated implements ShouldQueue
@@ -16,7 +17,7 @@ class NotifyMailCreated implements ShouldQueue
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -27,7 +28,7 @@ class NotifyMailCreated implements ShouldQueue
      */
     public function handle(OrderCreated $event)
     {
-
-            Mail::to('hello@gmail.com')->send(new UserMail($event));
+        //dd($event);
+        Mail::to($event->email)->send(new UserMail($event));
     }
 }

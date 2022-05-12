@@ -10,7 +10,12 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = ['catergory'];
-    public function cart(){
-        return $this->belongTo(Cart::class);
+    public function carts()
+    {
+        return $this->belongsToMany(Cart::class,'product_carts');
+    }
+    public function order()
+    {
+        return $this->hasMany(Order::class);
     }
 }

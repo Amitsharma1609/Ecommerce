@@ -7,6 +7,7 @@
                 <tr class="bg-info">
                     <th>Product Name</th>
                     <th>Description</th>
+                    <th>Quantity</th>
                     <th>Price</th>
                 </tr>
             </thead>
@@ -14,10 +15,11 @@
                 <tr>
                     <td>{{ $details->name }}</td>
                     <td>{{ $details->description }}</td>
+                    <td>{{ $details->quantity }}</td>
                     <td>{{ $details->price }}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Total</td>
+                    <td colspan="3">Total</td>
                     <td>{{$details->price}}</td>
                 </tr>
             </tbody>

@@ -7,21 +7,24 @@
                     @csrf
                     <div class="form-group">
                         <label for="Product Name">Product Name:</label>
-                        <input type="Product Name" class="form-control m-2" id="Product Name"
-                            placeholder="Enter Product Name" name="name">
+                        <input type="Product Name" class="form-control m-2" placeholder="Enter Product Name" name="name">
                     </div>
                     <div class="form-group">
-                        <label for="pwd">Price:</label>
-                        <input type="" class="form-control m-2" id="pwd" placeholder="Enter " name="price">
+                        <label>Price:</label>
+                        <input type="text" class="form-control m-2" placeholder="Enter Price" name="price">
                     </div>
                     <div class="form-group">
-                        <label for="pwd">catergory:</label>
-                        <input type="" class="form-control m-2" id="pwd" placeholder="Enter " name="category">
+                        <label>catergory:</label>
+                        <input type="text" class="form-control m-2" placeholder="Enter catergory" name="category">
                     </div>
 
                     <div class="form-group">
-                        <label for="pwd">description:</label>
-                        <input type="" class="form-control m-2" id="pwd" placeholder="Enter " name="description">
+                        <label>quantity:</label>
+                        <input type="number" class="form-control m-2" placeholder="Enter quantity" name="quantity">
+                    </div>
+                    <div class="form-group">
+                        <label>description:</label>
+                        <input type="text" class="form-control m-2" placeholder="Enter description" name="description">
                     </div>
                     <div class="form-group">
                         <label for="formFile" class="form-label">Image</label>

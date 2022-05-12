@@ -23,16 +23,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($product as $item)
+            @foreach ($user as $item)
                 <tr>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->description }}</td>
-                    <td>{{ $item->price }}</td>
+                    <td>{{ $item['products'][0]->name }}</td>
+                    <td>{{ $item['products'][0]->description }}</td>
+                    <td>{{ $item['products'][0]->price }}</td>
                 </tr>
             @endforeach
             <tr>
                 <td colspan="2">Total</td>
-                <td>{{ $user }}</td>
+                <td>{{ $sum }}</td>
             </tr>
         </tbody>
     </table>

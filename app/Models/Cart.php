@@ -8,7 +8,8 @@ use App\Models\Product;
 class Cart extends Model
 {
     use HasFactory;
-    public function product(){
-        return $this->hasMany(Product::class,'id');
+    public function products()
+    {
+        return $this->belongsToMany(Product::class,'product_carts');
     }
 }

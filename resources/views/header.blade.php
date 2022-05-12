@@ -1,9 +1,11 @@
 <?php
 use App\Http\Controllers\ProductController;
-$total=0;
-if(auth()->user())
-{
-  $total= ProductController::cartitem();
+use App\Models\Product;
+$product = Product::all();
+// dd($product);
+$total = 0;
+if (auth()->user()) {
+    $total = ProductController::cartitem();
 }
 
 ?>
@@ -14,25 +16,43 @@ if(auth()->user())
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
+
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/myorder">my order</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"></a>
+                @cannot('isAdmin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="/myorder">my order</a>
+                    </li>
+                @endcannot
+                @can('isAdmin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add">add-item</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="manage-item">manage-item</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/mange">Orders</a>
+                    </li>
+                @endcan
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Category
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <form action="/cat" method="POST">
+                            @csrf
+                            <li><input name="category" type="submit" value="mobile" style="width: 100%"></li>
+                            <li><input name="category" type="submit" value="Table" style="width: 100%"></li>
+                            <li><input name="category" type="submit" value="Led Tv" style="width: 100%"></li>
+                            <li><input name="category" type="submit" value="Washing Machine" style="width: 100%"></li>
+                        </form>
+                        </ul>
                 </li>
 
-                @can('isAdmin')
-                <li class="nav-item">
-                    <a class="nav-link" href="/add">add-item</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="manage-item">manage-item</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users">Users</a>
-                </li>
-                @endcan
                 <form class="d-flex" action="/search" method="POST">
                     @csrf
                     <input class="form-control me-2 search" name="query" type="search" placeholder="Search"
@@ -57,9 +77,11 @@ if(auth()->user())
                     </li>
                 @endif
             @else
-            <li class="nav-item">
-                <a class="nav-link" href="/cart-list">cart({{$total}})</a>
-            </li>
+                @cannot('isAdmin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart-list">cart({{ $total }})</a>
+                    </li>
+                @endcannot
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" v-pre>
@@ -68,7 +90,7 @@ if(auth()->user())
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
+                                                         document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
 
@@ -79,6 +101,5 @@ if(auth()->user())
                 </li>
             @endguest
         </ul>
-    </div>
     </div>
 </nav>

@@ -19,8 +19,7 @@ class UserMail extends Mailable
     public function __construct($event)
     {
         $this->users= $event->users;
-        $this->products= $event->products;
-
+        $this->sum= $event->sum;
     }
 
     /**
@@ -30,6 +29,6 @@ class UserMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mail',['user'=>$this->users,'product'=>$this->products]);
+        return $this->view('mail',['user'=>$this->users,'sum'=>$this->sum]);
     }
 }

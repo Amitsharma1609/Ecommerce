@@ -12,10 +12,8 @@
 
     <title>Home page</title>
 </head>
-
-
 <body>
-    {{ View::make('header') }}
+    {{ View::make('header')}}
     @yield('content')
     {{ View::make('footer') }}
 
@@ -85,7 +83,7 @@
     }
 
     .search {
-        width: 500px !important
+        width: 400px !important
     }
 
     .cart-list-devider {
@@ -111,6 +109,13 @@
     .table{
         width: 100%;
         height: 50px;
+    }
+    .search-image{
+        height: 150px;
+        width: 200px;
+    }
+    .w-5{
+        display: none;
     }
 </style>
 

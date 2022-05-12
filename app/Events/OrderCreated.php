@@ -13,21 +13,23 @@ use Illuminate\Queue\SerializesModels;
 class OrderCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $users,$products;
+    public $users,$sum,$email;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($users,$products)
+    public function __construct($users,$sum,$email)
     {
         $this->users =$users;
-        $this->products =$products;
+        $this->sum =$sum;
+        $this->email =$email;
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
+
      * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn()

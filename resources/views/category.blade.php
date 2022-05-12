@@ -22,15 +22,6 @@
                 </div>
             @endforeach
         </div>
-            @else
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h2 class="font-set">Item is Not Available in the store</h2>
-                        </div>
-                    </div>
-                </div>
-        </div>
-        @endif
     </div>
+</div>
 @endsection
