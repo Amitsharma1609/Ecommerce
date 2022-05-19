@@ -45,7 +45,7 @@ Route::get('/add',function(){
 Route::post('/add',[AdminController::class,'addItems']);
 Route::get('/users',[AdminController::class,'users']);
 Route::get('/deletes/{id}',[AdminController::class,'deletes']);
-Route::get('orders/{id}',[AdminController::class,'orders']);
+Route::get('orders/{id}',[OrderController::class,'orders']);
 
 Route::get('/catergory',[ProductController::class,'catergory']);
 Route::post('/cat',[ProductController::class,'allcat']);
@@ -58,7 +58,7 @@ Route::post('/cat',[AdminController::class,'allcat']);
 Route::get('/cat',function(){
     return view('category');
 });
-Route::get('/pdf/{id}',[OrderController::class,'invoice']);
 Route::get('/cancelled/{id}',[ProductController::class,'cancelled']);
 Route::post('/price',[ProductController::class,'filter']);
 Route::get('/check',[ProductController::class,'item']);
+Route::get('/pdf/{id}',[OrderController::class,'invoice']);

@@ -8,8 +8,9 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use PDF;
+use App\Events\OrderCreated;
 
-class orderController extends Controller
+class OrderController extends Controller
 {
     public function myOrder()
     {
