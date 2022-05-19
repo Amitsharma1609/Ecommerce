@@ -7,7 +7,6 @@
                 <tr class="bg-info">
                     <th>Product Name</th>
                     <th>Description</th>
-                    <th>Quantity</th>
                     <th>Price</th>
                 </tr>
             </thead>
@@ -15,12 +14,11 @@
                 <tr>
                     <td>{{ $details->name }}</td>
                     <td>{{ $details->description }}</td>
-                    <td>{{ $details->quantity }}</td>
                     <td>{{ $details->price }}</td>
                 </tr>
                 <tr>
-                    <td colspan="3">Total</td>
-                    <td>{{$details->price}}</td>
+                    <td colspan="2">Total</td>
+                    <td>{{ $details->price }}</td>
                 </tr>
             </tbody>
         </table>
@@ -29,15 +27,18 @@
             <div class="form-group">
                 <label>Address:</label>
                 <textarea name="address" placeholder="enter your address" class="form-control"></textarea>
+                @error('address')
+                    <div style="color:red"> {{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="pwd">Payment Method</label> <br> <br>
                 <input type="radio" value="cash" name="payment"> <span>online payment</span> <br> <br>
-                <input type="radio" value="cash" name="payment"> <span>EMI payment</span> <br><br>
-                <input type="radio" value="cash" name="payment"> <span>Payment on Delivery</span> <br> <br>
-
+                @error('address')
+                    <div style="color:red"> {{ $message }}</div>
+                @enderror
             </div>
-            <button type="submit" class="btn btn-success">Order Now</button>
+            <button type="submit" class="btn btn-success">Pay Now</button>
         </form>
     </div>
 @endsection

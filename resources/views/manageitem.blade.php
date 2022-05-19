@@ -32,7 +32,7 @@
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->quantity }}</td>
                                     <td>
-                                        <a href="/uploads/{{ $item->id }}" title="View Student"><button
+                                        <a href="/uploads/{{ $item->id }}" title="View"><button
                                                 class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i>
                                                 View</button></a>
                                         <a href="/edit/{{ $item->id }}" title="Edit"><button

@@ -9,7 +9,7 @@ if (auth()->user()) {
 }
 
 ?>
-<nav class="navbar navbar-expand-sm bg-info navbar-white">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">My website</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -28,7 +28,7 @@ if (auth()->user()) {
                         <a class="nav-link" href="/add">add-item</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="manage-item">manage-item</a>
+                        <a class="nav-link" href="/manage-item">manage-item</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/users">Users</a>
@@ -45,12 +45,14 @@ if (auth()->user()) {
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <form action="/cat" method="POST">
                             @csrf
-                            <li><input name="category" type="submit" value="mobile" style="width: 100%"></li>
-                            <li><input name="category" type="submit" value="Table" style="width: 100%"></li>
-                            <li><input name="category" type="submit" value="Led Tv" style="width: 100%"></li>
-                            <li><input name="category" type="submit" value="Washing Machine" style="width: 100%"></li>
+                            <div class="col-md-12 text-center">
+                            <li><input name="category" type="submit" value="mobile" class="btn btn-light "></li>
+                            <li><input name="category" type="submit" value="Tablet" class="btn btn-light "></li>
+                            <li><input name="category" type="submit" value="Tv" class="btn btn-light "></li>
+                            <li><input name="category" type="submit" value="Washing Machine" class="btn btn-light "></li>
+                            </div>
                         </form>
-                        </ul>
+                    </ul>
                 </li>
 
                 <form class="d-flex" action="/search" method="POST">
@@ -90,7 +92,7 @@ if (auth()->user()) {
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                                             document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
 

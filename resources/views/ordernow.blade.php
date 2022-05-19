@@ -12,13 +12,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($user as $key=>$item)
+                @foreach ($user as $key => $item)
                     <tr>
                         <td>{{ $item['products'][0]->name }}</td>
                         <td>{{ $item['products'][0]->description }}</td>
                         <td>{{ $item->quantity }}</td>
                         <td>{{ $item['products'][0]->price }}</td>
-
                     </tr>
                 @endforeach
                 <tr>
@@ -32,14 +31,17 @@
             <div class="form-group">
                 <label>Address:</label>
                 <textarea name="address" placeholder="enter your address" class="form-control"></textarea>
+                @error('address')
+                    <div style="color:red"> {{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
                 <label>Payment Method</label> <br> <br>
                 <input type="radio" value="cash" name="payment"> <span>online payment</span> <br> <br>
-                <input type="radio" value="cash" name="payment"> <span>EMI payment</span> <br><br>
-                <input type="radio" value="cash" name="payment"> <span>Payment on Delivery</span> <br> <br>
-
             </div>
+            @error('payment')
+                <div style="color:red"> {{ $message }}</div>
+            @enderror
             <button type="submit" class="btn btn-success">Order Now</button>
         </form>
     </div>

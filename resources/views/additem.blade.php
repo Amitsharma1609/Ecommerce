@@ -15,7 +15,16 @@
                     </div>
                     <div class="form-group">
                         <label>catergory:</label>
-                        <input type="text" class="form-control m-2" placeholder="Enter catergory" name="category">
+                        <div class="form-group">
+                            <select name="category" class="" style="width: 300px; height: 42px">
+                                <optgroup label="category">
+                                  <option value="mobile">mobile</option>
+                                  <option value="Tv">Tv</option>
+                                  <option value="Led">Led</option>
+                                  <option value="Tablet">Tablet</option>
+                                </optgroup>
+                              </select>
+                        </div>
                     </div>
 
                     <div class="form-group">

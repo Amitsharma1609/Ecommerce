@@ -12,6 +12,7 @@
                                 <th>Order ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Product name</th>
                                 <th>Address</th>
                                 <th>Payment method</th>
                                 <th>Status</th>
@@ -20,12 +21,15 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             @foreach ($order as $item)
                                 <tr>
+
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->user->name }}</td>
                                     <td>{{ $item->user->email }}</td>
+                                    <td>{{$item->product->name}}</td>
                                     <td>{{ $item->address }}</td>
                                     <td>{{ $item->payment_method }}</td>
                                     <td>{{ $item->status }}</td>
@@ -52,7 +56,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <span>{{$order->links()}}</span>
+{{-- {{$order->links()}} --}}
                 </div>
             </div>
         </div>

@@ -10,8 +10,6 @@
     }
 
 </style>
-
-
 <div class="container mt-3">
     <h1>Your order</h1>
     <table class="table">

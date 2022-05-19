@@ -1,6 +1,6 @@
 @extends('master')
 @section('content')
-    <!-- Carousel -->
+
     <div id="demo" class="carousel slide" data-bs-ride="carousel">
         <!-- Indicators/dots -->
         <div class="carousel-indicators">
@@ -14,7 +14,7 @@
             @foreach ($products->take(4) as $item)
                 <div class="carousel-item {{ $item['id'] == 1 ? 'active' : '' }}">
                     <a href="{{ 'uploads/' . $item['id'] }}">
-                        <img class="slider-img" src="{{ 'uploads/' . $item['gallery'] }}">
+                        <img class="slider-img rounded mx-auto d-block" src="{{ 'uploads/' . $item['gallery'] }}">
                         <div class="carousel-caption slider-text">
                             <h3>{{ $item['name'] }}</h3>
                             <p>{{ $item['description'] }}</p>
@@ -33,15 +33,16 @@
     </div>
     <div class="trending">
         <h3>Trending Product</h3>
-        @foreach ($products->take(5) as $item)
+        @foreach ($new->take(5) as $item)
             <div class="trending-item">
                 <a href="uploads/{{ $item['id'] }}">
-                    <img class="trending-img" src="{{ 'uploads/' . $item['gallery'] }}">
-                    <div class="">
-                        <h4>{{ $item['name'] }}</h4>
-                    </div>
+                    <img class="images" src="{{ 'uploads/' . $item['gallery'] }}">
                 </a>
+                    <div class="">
+                        <h4 style="color:rgb(73, 73, 160);">{{ $item['name'] }}</h4>
+                    </div>
             </div>
         @endforeach
     </div>
+
 @endsection

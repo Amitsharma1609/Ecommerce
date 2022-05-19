@@ -15,7 +15,8 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::all();
-        return view('product', ['products' => $product]);
+        $new = Product::orderBy('created_at', 'desc')->get();
+        return view('product', ['products' => $product, 'new' => $new]);
     }
     public function addItem()
     {
@@ -27,18 +28,27 @@ class ProductController extends Controller
     public function detail($id)
     {
         $datas = Product::find($id);
+        // return $datas;
         return view('detail', ['details' => $datas]);
     }
-    public function addtocart(Request $req)
+    public function addtoCart(Request $req)
     {
-        $cart = new Cart;
-        $cart->user_id = auth()->user()->id;
-        $cart->product_id = $req->product_id;
-        $cart->quantity = $req->quantity;
-        $cart->save();
+        $cart = Cart::where('carts.user_id', auth()->user()->id)
+            ->where('product_id', '=', $req->product_id)->first();
+        if ($cart) {
+            $cart->quantity += $req->quantity;
+            $cart->save();
+            return redirect('/');
+        } else {
+            $cart = new Cart;
+            $cart->user_id = auth()->user()->id;
+            $cart->product_id = $req->product_id;
+            $cart->quantity = $req->quantity;
+            $cart->save();
 
-        $cart->products()->attach($req->product_id);
-        return redirect('/');
+            $cart->products()->attach($req->product_id);
+            return redirect('/');
+        }
     }
     public static function cartItem()
     {
@@ -49,9 +59,16 @@ class ProductController extends Controller
         $cart = Cart::with(['products'])
             ->where('carts.user_id', auth()->user()->id)
             ->get();
-        return view('cartlist', ['carts' => $cart]);
+        $sum = 0;
+        $quantity = 0;
+
+        foreach ($cart as $user) {
+            $quantity = $quantity + $user->quantity;
+            $sum = $sum + $user->products[0]->price * $user->quantity;
+        }
+        return view('cartlist', ['carts' => $cart, 'sum' => $sum, 'quantity' => $quantity]);
     }
-    public function removeitem($id)
+    public function removeItem($id)
     {
         Cart::destroy($id);
         return redirect('/cart-list');
@@ -59,124 +76,25 @@ class ProductController extends Controller
     public function search(Request $req)
     {
         $data = Product::
-            where('name', 'like', '%' . $req->input('query') . '%')
-            ->get();
+            where('name', 'like', '%' . $req->input('query') . '%')->orderBy('price', 'asc')->get();
         return view('search', ['products' => $data]);
     }
-    public function myOrder()
+    public function cancelled($id)
     {
-        $order = Order::with(['product'])->where('user_id', auth()->user()->id)->get();
-
-        return view('myorder', ['data' => $order]);
-    }
-    public function orderNow()
-    {
-        $users = Cart::with(['products'])
-            ->where('carts.user_id', auth()->user()->id)
-            ->get();
-        $sum = 0;
-        foreach ($users as $user) {
-            $sum = $sum + $user->products[0]->price * $user->quantity;
-        }
-        return view('ordernow', ['sum' => $sum, 'user' => $users]);
-    }
-    public function orderplace(Request $req)
-    {
-        $users = Cart::with(['products'])
-            ->where('carts.user_id', auth()->user()->id)
-            ->get();
-            $sum = 0;
-            foreach ($users as $user) {
-                $sum = $sum + $user->products[0]->price * $user->quantity;
-            }
-            //return $users;
-        $carts = Cart::where('user_id', auth()->user()->id)->get();
-        $email = auth()->user()->email;
-        foreach ($carts as $cart) {
-            $order = new Order;
-            $order->product_id = $cart['product_id'];
-            $order->user_id = $cart['user_id'];
-            $order->payment_method = 'credit card';
-            $order->status = 'Ordered';
-            $order->quantity = 1;
-            $order->address = $req->address;
-            $order->save();
-        }
-        event(new OrderCreated($users,$sum,$email));
-        return redirect('/');
-    }
-    public function addItems(Request $req)
-    {
-        $product = new Product;
-        $product->name = $req->name;
-        $product->price = $req->price;
-        $product->category = $req->category;
-        $product->category = $req->category;
-        $product->quantity = $req->quantity;
-        $product->description = $req->description;
-        $fileName = time() . '.' . $req->file('gallery')->getClientOriginalExtension();
-        $req->file('gallery')->move(public_path('/uploads'), $fileName);
-        $product->gallery = $fileName;
-        $product->save();
-
-        return redirect('/');
-    }
-    public function manageitem()
-    {
-        $products = Product::all();
-        return view('manageitem', ['product' => $products]);
-    }
-    public function edit($id)
-    {
-        $product = Product::find($id);
-        return view('edit', ['product' => $product]);
-    }
-    public function update(Request $req, $id)
-    {
-        $product = Product::find($id);
-        $product->name = $req->name;
-        $product->price = $req->price;
-        $product->category = $req->category;
-        $product->description = $req->description;
-        $product->save();
-        return redirect('manage-item')->with('flash_message', 'Product Updated!');
-    }
-    public function delete($id)
-    {
-        Product::destroy($id);
-        return redirect('manage-item');
-    }
-    public function users()
-    {
-        $user = User::all();
-        return view('user', ['users' => $user]);
-    }
-    public function deletes($id)
-    {
-        User::destroy($id);
-        return redirect('users');
-    }
-    public function orders($id)
-    {
-        $datas = Product::With(['carts'])->find($id);
-        return view('orders', ['details' => $datas]);
-    }
-    public function AdminOrder(){
-        if (!Gate::allows('isAdmin')) {
-            abort(404);
-        }
-          $Order =Order::with(['user'])->paginate(10);
-          return view('adminOrder',['order'=>$Order]);
-    }
-    public function adminUpdate($id,Request $req){
         $order = Order::find($id);
-        $order->status = $req->status;
+        $order->status = 'cancelled';
         $order->save();
-        return redirect('/mange');
+        return redirect('/myorder');
     }
-    public function allcat(Request $req){
-        // /return $req->all();
-        $product = Product::where('category','=',$req->category)->get();
-        return redirect('/cat',['products'=>$product]);
+    public function filter(Request $req)
+    {
+        if ($req->price == 'High to low') {
+            $product = Product::where('category', '=', $req->category)->orderBy('price', 'desc')->get();
+            return view('category', ['products' => $product]);
+        } else {
+            $product = Product::where('category', '=', $req->category)->orderBy('price', 'asc')->get();
+            return view('category', ['products' => $product]);
+        }
     }
+
 }
