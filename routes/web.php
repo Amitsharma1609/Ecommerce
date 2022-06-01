@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\sessionController;
 use App\Http\Controllers\ProductController;
 
 /*
